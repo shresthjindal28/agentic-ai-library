@@ -23,7 +23,7 @@ export default function RootLayout({
   // If Clerk is not configured, render without ClerkProvider
   if (!isClerkConfigured) {
     return (
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
           {children}
         </body>

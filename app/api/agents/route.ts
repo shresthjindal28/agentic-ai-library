@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getCache, setCache } from '@/lib/redis';
-import { getAgents } from '@/lib/agents';
+import { getAllAgents } from '@/lib/agents';
 
 // Cache expiration time in seconds (10 minutes)
 const CACHE_EXPIRATION = 600;
@@ -17,7 +17,7 @@ export async function GET() {
     
     // If not in cache, get from database/source
     console.log('Cache miss, fetching agents from source');
-    const agents = getAgents();
+    const agents = getAllAgents();
     
     // Store in cache for future requests
     await setCache('agents:all', agents, CACHE_EXPIRATION);
