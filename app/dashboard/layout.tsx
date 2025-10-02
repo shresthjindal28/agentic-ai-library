@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { UserButton } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import { 
@@ -10,9 +9,8 @@ import {
   FiBook, 
   FiSettings, 
   FiUser, 
+  FiBarChart,
   FiMenu, 
-  FiX,
-  FiLogOut,
   FiChevronRight,
   FiChevronDown
 } from 'react-icons/fi';
@@ -27,7 +25,6 @@ export default function DashboardLayout({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
   const [docsExpanded, setDocsExpanded] = useState(false);
-  const router = useRouter();
 
   // Handle screen resize
   useEffect(() => {

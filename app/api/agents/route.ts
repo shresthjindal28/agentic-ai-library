@@ -8,7 +8,7 @@ const CACHE_EXPIRATION = 600;
 export async function GET() {
   try {
     // Try to get agents from Redis cache first
-    const cachedAgents = await getCache<any[]>('agents:all');
+    const cachedAgents = await getCache<unknown[]>('agents:all');
     
     if (cachedAgents) {
       console.log('Serving agents from cache');
@@ -32,7 +32,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<Response> {
   try {
     const body = await request.json();
     

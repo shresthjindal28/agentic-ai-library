@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { clerkMiddleware, createRouteMatcher, getAuth } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import type { NextRequest } from 'next/server';
 
 const publicRoutes = [
@@ -32,10 +32,12 @@ export default isClerkConfigured
 
       const { userId } = await auth(); // `auth` returns Promise with user info
 
+      // Redirect authenticated users away from auth pages to dashboard
       if (userId && isAuthRoute(req)) {
         return NextResponse.redirect(new URL("/dashboard", req.url));
       }
 
+      // Redirect unauthenticated users to sign-in for protected routes
       if (!userId && (req.nextUrl.pathname.startsWith('/dashboard') || req.nextUrl.pathname.startsWith('/agents') || req.nextUrl.pathname.startsWith('/docs'))) {
         const signInUrl = new URL('/sign-in', req.url);
         signInUrl.searchParams.set('redirect_url', req.url);
@@ -44,7 +46,7 @@ export default isClerkConfigured
 
       return NextResponse.next();
     })
-  : (req: NextRequest) => {
+  : () => {
       console.warn('Clerk is not properly configured. Authentication is disabled.');
       return NextResponse.next();
     };

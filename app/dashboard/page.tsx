@@ -64,11 +64,11 @@ export default function DashboardPage() {
   ];
 
   const recentActivity = [
-    { id: 1, event: 'Agent "Conversation Chain" was updated', time: '2 minutes ago' },
+    { id: 1, event: 'Agent &quot;Conversation Chain&quot; was updated', time: '2 minutes ago' },
     { id: 2, event: 'New team member joined', time: '1 hour ago' },
     { id: 3, event: 'API key was created', time: '3 hours ago' },
     { id: 4, event: 'Documentation was updated', time: '1 day ago' },
-    { id: 5, event: 'New agent "Structured Output" was created', time: '2 days ago' },
+    { id: 5, event: 'New agent &quot;Structured Output&quot; was created', time: '2 days ago' },
   ];
 
   const container = {
@@ -98,7 +98,7 @@ export default function DashboardPage() {
     <div className="max-w-7xl mx-auto">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
-        <p className="text-gray-600 mt-1">Welcome back! Here's what's happening with your agents.</p>
+        <p className="text-gray-600 mt-1">Welcome back! Here&apos;s what&apos;s happening with your agents.</p>
       </div>
 
       {/* Stats Grid */}

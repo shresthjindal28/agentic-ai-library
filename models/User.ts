@@ -13,10 +13,13 @@ const UserSchema = new Schema({
   },
   firstName: String,
   lastName: String,
-  favoriteAgents: [{
-    type: String,
-    ref: 'Agent'
-  }],
+  username: String,
+  profileImageUrl: String,
+  emailVerified: Boolean,
+  phoneNumber: String,
+  phoneVerified: Boolean,
+  twoFactorEnabled: Boolean,
+  lastSignInAt: Date,
   createdAt: {
     type: Date,
     default: Date.now,
@@ -24,6 +27,19 @@ const UserSchema = new Schema({
   updatedAt: {
     type: Date,
     default: Date.now,
+  },
+  externalAccounts: [{
+    provider: String,
+    providerUserId: String,
+    emailAddress: String
+  }],
+  favoriteAgents: [{
+    type: String,
+    ref: 'Agent'
+  }],
+  metadata: {
+    type: Schema.Types.Mixed,
+    default: {}
   },
 });
 

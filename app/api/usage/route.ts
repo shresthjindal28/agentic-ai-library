@@ -29,21 +29,21 @@ export async function GET(req: NextRequest) {
       }
 
       const cacheKey = 'usage:all';
-      let usageStats = await getCache<Record<string, any>>(cacheKey);
+      let usageStats = await getCache<Record<string, unknown>>(cacheKey);
 
       if (!usageStats) {
-        usageStats = (await hashGetAll<any>('user_usage')) || {};
+        usageStats = (await hashGetAll<unknown>('user_usage')) || {};
         await setCache(cacheKey, usageStats, CACHE_EXPIRATION);
       }
 
       return NextResponse.json({ usage: usageStats });
     } else {
       const cacheKey = `usage:${userId}`;
-      let userUsage = await getCache<any>(cacheKey);
+      let userUsage = await getCache<unknown>(cacheKey);
 
       if (!userUsage) {
         userUsage =
-          (await hashGetAll<any>(`user:${userId}:usage`)) || {
+          (await hashGetAll<unknown>(`user:${userId}:usage`)) || {
             apiCalls: 0,
             agents: {},
             lastUsed: null,

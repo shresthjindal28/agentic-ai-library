@@ -14,7 +14,7 @@ interface MongooseCache {
 
 // Add mongoose to NodeJS.Global interface
 declare global {
-  var mongoose: { conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null } | undefined;
+  var mongoose: MongooseCache | undefined;
 }
 
 let cached: MongooseCache = global.mongoose || { conn: null, promise: null };

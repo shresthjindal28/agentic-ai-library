@@ -3,7 +3,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import connectToDatabase from '@/lib/mongodb';
 import User from '@/models/User';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const clerkUser = await currentUser();
     const userId = clerkUser?.id;
@@ -51,7 +51,24 @@ export async function POST(req: NextRequest) {
         email: clerkUser.emailAddresses[0]?.emailAddress || '',
         firstName: clerkUser.firstName || '',
         lastName: clerkUser.lastName || '',
+        username: clerkUser.username || '',
+        profileImageUrl: clerkUser.imageUrl || '',
+        emailVerified: clerkUser.emailAddresses[0]?.verification?.status === 'verified' || false,
+        phoneNumber: clerkUser.phoneNumbers?.[0]?.phoneNumber || '',
+        phoneVerified: clerkUser.phoneNumbers?.[0]?.verification?.status === 'verified' || false,
+        twoFactorEnabled: clerkUser.twoFactorEnabled || false,
+        lastSignInAt: clerkUser.lastSignInAt ? new Date(clerkUser.lastSignInAt) : new Date(),
+        externalAccounts: clerkUser.externalAccounts?.map(account => ({
+          provider: account.provider,
+          providerUserId: account.externalId,
+          emailAddress: account.emailAddress
+        })) || [],
         favoriteAgents: favoriteAgents || [],
+        metadata: {
+          public: clerkUser.publicMetadata || {},
+          private: clerkUser.privateMetadata || {},
+          unsafe: clerkUser.unsafeMetadata || {}
+        }
       });
     }
 

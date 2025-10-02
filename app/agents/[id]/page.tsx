@@ -5,8 +5,9 @@ import { UserButton } from '@clerk/nextjs';
 import { notFound } from 'next/navigation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-export default function AgentPage({ params }: { params: { id: string } }) {
-  const agent = getAgentById(params.id);
+export default async function AgentPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const agent = getAgentById(id);
   
   if (!agent) {
     notFound();

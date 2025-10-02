@@ -32,7 +32,7 @@ export function getRedisClient(): Redis {
 }
 
 // Helper functions for common Redis operations
-export async function setCache(key: string, value: any, expireSeconds?: number): Promise<void> {
+export async function setCache(key: string, value: unknown, expireSeconds?: number): Promise<void> {
   const redis = getRedisClient();
   const serializedValue = JSON.stringify(value);
   
@@ -108,7 +108,7 @@ export async function checkRateLimit(
 }
 
 // Hash operations for storing structured data
-export async function hashSet(key: string, field: string, value: any): Promise<void> {
+export async function hashSet(key: string, field: string, value: unknown): Promise<void> {
   const redis = getRedisClient();
   await redis.hset(key, field, JSON.stringify(value));
 }
@@ -146,7 +146,7 @@ export async function hashGetAll<T>(key: string): Promise<Record<string, T> | nu
 }
 
 // List operations for queues and recent items
-export async function listPush(key: string, value: any): Promise<void> {
+export async function listPush(key: string, value: unknown): Promise<void> {
   const redis = getRedisClient();
   await redis.rpush(key, JSON.stringify(value));
 }
@@ -166,7 +166,7 @@ export async function listRange<T>(key: string, start: number, end: number): Pro
 }
 
 // Pub/Sub for real-time updates
-export function createSubscriber(channel: string, callback: (message: any) => void): () => void {
+export function createSubscriber(channel: string, callback: (message: unknown) => void): () => void {
   const subscriber = new Redis(redisOptions);
   
   subscriber.subscribe(channel);
@@ -189,7 +189,7 @@ export function createSubscriber(channel: string, callback: (message: any) => vo
   };
 }
 
-export async function publish(channel: string, message: any): Promise<void> {
+export async function publish(channel: string, message: unknown): Promise<void> {
   const redis = getRedisClient();
   await redis.publish(channel, JSON.stringify(message));
 }
